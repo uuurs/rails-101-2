@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, :only => [:new, :create]
 
+
   def new
     @group = Group.find(params[:group_id])
     @post = Post.new
@@ -19,6 +20,19 @@ class PostsController < ApplicationController
     end
   end
 
+  def edit
+    @group = Group.find(params[:group_id])
+    @post = Post.find(parames[:post_id])
+
+  end
+
+  def delete
+    @group = Group.find(params[:group_id])
+    @post = Post.find(params[:post_id])
+    @post.destroy
+    redirect_to posts_path, alert: "post deleted"
+  end
+
 
 
   private
@@ -26,7 +40,7 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:content)
   end
-  
+
 
 
 end
